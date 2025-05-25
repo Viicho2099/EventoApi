@@ -6,35 +6,35 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EventoApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddTableEvento1 : Migration
+    public partial class InicialOracle : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Eventos1",
+                name: "EventosTable", // Cambié "Eventos1" por "EventosTable"
                 columns: table => new
                 {
-                    EventoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Lugar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    EventoId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    Nombre = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
+                    Lugar = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    Tipo = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Eventos1", x => x.EventoId);
+                    table.PrimaryKey("PK_EventosTable", x => x.EventoId); // Cambié la clave primaria
                 });
 
             migrationBuilder.CreateTable(
                 name: "Participantes",
                 columns: table => new
                 {
-                    ParticipanteId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ParticipanteId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    Nombre = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    Email = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,11 +45,11 @@ namespace EventoApi.Migrations
                 name: "Ponentes",
                 columns: table => new
                 {
-                    PonenteId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PonenteId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    Nombre = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    Apellido = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    Bio = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,20 +60,20 @@ namespace EventoApi.Migrations
                 name: "Sesiones",
                 columns: table => new
                 {
-                    SesionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HoraInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HoraFin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EventoId = table.Column<int>(type: "int", nullable: false)
+                    SesionId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    Nombre = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    HoraInicio = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
+                    HoraFin = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
+                    EventoId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sesiones", x => x.SesionId);
                     table.ForeignKey(
-                        name: "FK_Sesiones_Eventos1_EventoId",
+                        name: "FK_Sesiones_EventosTable_EventoId", // Cambié "Eventos1" por "EventosTable"
                         column: x => x.EventoId,
-                        principalTable: "Eventos1",
+                        principalTable: "EventosTable", // Cambié "Eventos1" por "EventosTable"
                         principalColumn: "EventoId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -82,19 +82,19 @@ namespace EventoApi.Migrations
                 name: "Inscripciones",
                 columns: table => new
                 {
-                    InscripcionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ParticipanteId = table.Column<int>(type: "int", nullable: false),
-                    EventoId = table.Column<int>(type: "int", nullable: false),
-                    FechaInscripcion = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    InscripcionId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    ParticipanteId = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    EventoId = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    FechaInscripcion = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Inscripciones", x => x.InscripcionId);
                     table.ForeignKey(
-                        name: "FK_Inscripciones_Eventos1_EventoId",
+                        name: "FK_Inscripciones_EventosTable_EventoId", // Cambié "Eventos1" por "EventosTable"
                         column: x => x.EventoId,
-                        principalTable: "Eventos1",
+                        principalTable: "EventosTable", // Cambié "Eventos1" por "EventosTable"
                         principalColumn: "EventoId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -109,17 +109,17 @@ namespace EventoApi.Migrations
                 name: "PonentesEventos",
                 columns: table => new
                 {
-                    EventoId = table.Column<int>(type: "int", nullable: false),
-                    PonenteId = table.Column<int>(type: "int", nullable: false),
-                    PonenteEventoId = table.Column<int>(type: "int", nullable: false)
+                    EventoId = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    PonenteId = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    PonenteEventoId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PonentesEventos", x => new { x.EventoId, x.PonenteId });
                     table.ForeignKey(
-                        name: "FK_PonentesEventos_Eventos1_EventoId",
+                        name: "FK_PonentesEventos_EventosTable_EventoId", // Cambié "Eventos1" por "EventosTable"
                         column: x => x.EventoId,
-                        principalTable: "Eventos1",
+                        principalTable: "EventosTable", // Cambié "Eventos1" por "EventosTable"
                         principalColumn: "EventoId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -134,11 +134,11 @@ namespace EventoApi.Migrations
                 name: "Pagos",
                 columns: table => new
                 {
-                    PagoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Monto = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    FechaPago = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    InscripcionId = table.Column<int>(type: "int", nullable: false)
+                    PagoId = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    Monto = table.Column<decimal>(type: "DECIMAL(18,2)", precision: 18, scale: 2, nullable: false),
+                    FechaPago = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
+                    InscripcionId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,10 +196,11 @@ namespace EventoApi.Migrations
                 name: "Ponentes");
 
             migrationBuilder.DropTable(
-                name: "Eventos1");
+                name: "EventosTable"); // Cambié "Eventos1" por "EventosTable"
 
             migrationBuilder.DropTable(
                 name: "Participantes");
         }
     }
 }
+

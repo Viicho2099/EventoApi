@@ -3,8 +3,8 @@ using System;
 using EventoApi.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Oracle.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -20,263 +20,265 @@ namespace EventoApi.Migrations
                 .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("EventoApi.Models.Evento", b =>
-                {
-                    b.Property<int>("EventoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("EventoId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventoId"));
+                OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventoId"));
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("Fecha")
+                    .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<string>("Lugar")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Lugar")
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Nombre")
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Tipo")
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR2(2000)");
 
-                    b.HasKey("EventoId");
+                b.HasKey("EventoId");
 
-                    b.ToTable("Eventos1");
-                });
+                // Cambié el nombre de la tabla a "EventosTable"
+                b.ToTable("EventosTable");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Inscripcion", b =>
-                {
-                    b.Property<int>("InscripcionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("InscripcionId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InscripcionId"));
+                OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InscripcionId"));
 
-                    b.Property<int>("EventoId")
-                        .HasColumnType("int");
+                b.Property<int>("EventoId")
+                    .HasColumnType("NUMBER(10)");
 
-                    b.Property<DateTime>("FechaInscripcion")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("FechaInscripcion")
+                    .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<int>("ParticipanteId")
-                        .HasColumnType("int");
+                b.Property<int>("ParticipanteId")
+                    .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("InscripcionId");
+                b.HasKey("InscripcionId");
 
-                    b.HasIndex("EventoId");
+                b.HasIndex("EventoId");
 
-                    b.HasIndex("ParticipanteId");
+                b.HasIndex("ParticipanteId");
 
-                    b.ToTable("Inscripciones");
-                });
+                b.ToTable("Inscripciones");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Pago", b =>
-                {
-                    b.Property<int>("PagoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("PagoId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PagoId"));
+                OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PagoId"));
 
-                    b.Property<DateTime>("FechaPago")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("FechaPago")
+                    .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<int>("InscripcionId")
-                        .HasColumnType("int");
+                b.Property<int>("InscripcionId")
+                    .HasColumnType("NUMBER(10)");
 
-                    b.Property<decimal>("Monto")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                b.Property<decimal>("Monto")
+                    .HasPrecision(18, 2)
+                    .HasColumnType("DECIMAL(18,2)");
 
-                    b.HasKey("PagoId");
+                b.HasKey("PagoId");
 
-                    b.HasIndex("InscripcionId");
+                b.HasIndex("InscripcionId");
 
-                    b.ToTable("Pagos");
-                });
+                b.ToTable("Pagos");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Participante", b =>
-                {
-                    b.Property<int>("ParticipanteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("ParticipanteId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ParticipanteId"));
+                OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ParticipanteId"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Nombre")
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR2(2000)");
 
-                    b.HasKey("ParticipanteId");
+                b.HasKey("ParticipanteId");
 
-                    b.ToTable("Participantes");
-                });
+                b.ToTable("Participantes");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Ponente", b =>
-                {
-                    b.Property<int>("PonenteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("PonenteId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PonenteId"));
+                OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PonenteId"));
 
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Apellido")
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<string>("Bio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Bio")
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Nombre")
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR2(2000)");
 
-                    b.HasKey("PonenteId");
+                b.HasKey("PonenteId");
 
-                    b.ToTable("Ponentes");
-                });
+                b.ToTable("Ponentes");
+            });
 
             modelBuilder.Entity("EventoApi.Models.PonenteEvento", b =>
-                {
-                    b.Property<int>("EventoId")
-                        .HasColumnType("int");
+            {
+                b.Property<int>("EventoId")
+                    .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("PonenteId")
-                        .HasColumnType("int");
+                b.Property<int>("PonenteId")
+                    .HasColumnType("NUMBER(10)");
 
-                    b.Property<int>("PonenteEventoId")
-                        .HasColumnType("int");
+                b.Property<int>("PonenteEventoId")
+                    .HasColumnType("NUMBER(10)");
 
-                    b.HasKey("EventoId", "PonenteId");
+                b.HasKey("EventoId", "PonenteId");
 
-                    b.HasIndex("PonenteId");
+                b.HasIndex("PonenteId");
 
-                    b.ToTable("PonentesEventos");
-                });
+                b.ToTable("PonentesEventos");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Sesion", b =>
-                {
-                    b.Property<int>("SesionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("SesionId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("NUMBER(10)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SesionId"));
+                OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SesionId"));
 
-                    b.Property<int>("EventoId")
-                        .HasColumnType("int");
+                b.Property<int>("EventoId")
+                    .HasColumnType("NUMBER(10)");
 
-                    b.Property<DateTime>("HoraFin")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("HoraFin")
+                    .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<DateTime>("HoraInicio")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("HoraInicio")
+                    .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Nombre")
+                    .IsRequired()
+                    .HasColumnType("NVARCHAR2(2000)");
 
-                    b.HasKey("SesionId");
+                b.HasKey("SesionId");
 
-                    b.HasIndex("EventoId");
+                b.HasIndex("EventoId");
 
-                    b.ToTable("Sesiones");
-                });
+                b.ToTable("Sesiones");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Inscripcion", b =>
-                {
-                    b.HasOne("EventoApi.Models.Evento", "Evento")
-                        .WithMany("Inscripciones")
-                        .HasForeignKey("EventoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("EventoApi.Models.Evento", "Evento")
+                    .WithMany("Inscripciones")
+                    .HasForeignKey("EventoId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("EventoApi.Models.Participante", "Participante")
-                        .WithMany("Inscripciones")
-                        .HasForeignKey("ParticipanteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("EventoApi.Models.Participante", "Participante")
+                    .WithMany("Inscripciones")
+                    .HasForeignKey("ParticipanteId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Evento");
+                b.Navigation("Evento");
 
-                    b.Navigation("Participante");
-                });
+                b.Navigation("Participante");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Pago", b =>
-                {
-                    b.HasOne("EventoApi.Models.Inscripcion", "Inscripcion")
-                        .WithMany("Pagos")
-                        .HasForeignKey("InscripcionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("EventoApi.Models.Inscripcion", "Inscripcion")
+                    .WithMany("Pagos")
+                    .HasForeignKey("InscripcionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Inscripcion");
-                });
+                b.Navigation("Inscripcion");
+            });
 
             modelBuilder.Entity("EventoApi.Models.PonenteEvento", b =>
-                {
-                    b.HasOne("EventoApi.Models.Evento", "Evento")
-                        .WithMany("PonentesEventos")
-                        .HasForeignKey("EventoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("EventoApi.Models.Evento", "Evento")
+                    .WithMany("PonentesEventos")
+                    .HasForeignKey("EventoId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("EventoApi.Models.Ponente", "Ponente")
-                        .WithMany("PonentesEventos")
-                        .HasForeignKey("PonenteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("EventoApi.Models.Ponente", "Ponente")
+                    .WithMany("PonentesEventos")
+                    .HasForeignKey("PonenteId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Evento");
+                b.Navigation("Evento");
 
-                    b.Navigation("Ponente");
-                });
+                b.Navigation("Ponente");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Sesion", b =>
-                {
-                    b.HasOne("EventoApi.Models.Evento", "Evento")
-                        .WithMany("Sesiones")
-                        .HasForeignKey("EventoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("EventoApi.Models.Evento", "Evento")
+                    .WithMany("Sesiones")
+                    .HasForeignKey("EventoId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Evento");
-                });
+                b.Navigation("Evento");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Evento", b =>
-                {
-                    b.Navigation("Inscripciones");
+            {
+                b.Navigation("Inscripciones");
 
-                    b.Navigation("PonentesEventos");
+                b.Navigation("PonentesEventos");
 
-                    b.Navigation("Sesiones");
-                });
+                b.Navigation("Sesiones");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Inscripcion", b =>
-                {
-                    b.Navigation("Pagos");
-                });
+            {
+                b.Navigation("Pagos");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Participante", b =>
-                {
-                    b.Navigation("Inscripciones");
-                });
+            {
+                b.Navigation("Inscripciones");
+            });
 
             modelBuilder.Entity("EventoApi.Models.Ponente", b =>
-                {
-                    b.Navigation("PonentesEventos");
-                });
+            {
+                b.Navigation("PonentesEventos");
+            });
 #pragma warning restore 612, 618
         }
     }
 }
+

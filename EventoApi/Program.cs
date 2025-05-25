@@ -6,9 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Obtener la cadena de conexión desde appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("Connection");
 
-// Configurar DbContext para PostgreSQL usando Npgsql
+// Cambiar a Oracle en vez de SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseOracle(connectionString));
 
 builder.Services.AddControllers();
 // Configuración de Swagger/OpenAPI
